@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useWallet } from "@/lib/genlayer/wallet";
 import { useContributorStats, useGenBalance } from "@/lib/hooks/useVeriDict";
 import { error, userRejected } from "@/lib/utils/toast";
