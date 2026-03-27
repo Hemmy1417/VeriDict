@@ -55,7 +55,7 @@ export function FirebaseDashboard() {
   const { data: activity = [],   isLoading: loadAct }   = useFBActivity(20);
   const { data: walletSess }                             = useFBWalletSession(address ?? null);
 
-  const filtered = subs.filter(s =>
+  const filtered = subs.filter((s: any) =>
     (!statusFilter || s.status === statusFilter) &&
     (!catFilter    || s.category === catFilter)
   );
@@ -82,11 +82,11 @@ export function FirebaseDashboard() {
           <div className="vd-stat-label">Total Submissions</div>
         </div>
         <div className="vd-stat-block">
-          <div className="vd-stat-val" style={{ color: "var(--green)" }}>{stats?.total_accepted ?? subs.filter(s => s.status === "accepted" || s.status === "accepted_with_feedback").length}</div>
+          <div className="vd-stat-val" style={{ color: "var(--green)" }}>{stats?.total_accepted ?? subs.filter((s: any) => s.status === "accepted" || s.status === "accepted_with_feedback").length}</div>
           <div className="vd-stat-label">Accepted</div>
         </div>
         <div className="vd-stat-block">
-          <div className="vd-stat-val gold">{stats?.total_disputed ?? subs.filter(s => s.status === "disputed").length}</div>
+          <div className="vd-stat-val gold">{stats?.total_disputed ?? subs.filter((s: any) => s.status === "disputed").length}</div>
           <div className="vd-stat-label">Disputed</div>
         </div>
         <div className="vd-stat-block">
@@ -107,7 +107,7 @@ export function FirebaseDashboard() {
       {tab === "contributions" && (
         <div>
           <div style={{ display: "flex", gap: "8px", marginBottom: "20px", flexWrap: "wrap" }}>
-            <select className="vd-form-select" style={{ width: "auto" }} value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
+            <select className="vd-form-select" style={{ width: "auto" }} value={statusFilter} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setStatusFilter(e.target.value)}>
               <option value="">All Status</option>
               <option value="accepted">Accepted</option>
               <option value="accepted_with_feedback">Feedback</option>
@@ -115,7 +115,7 @@ export function FirebaseDashboard() {
               <option value="disputed">Disputed</option>
               <option value="pending">Pending</option>
             </select>
-            <select className="vd-form-select" style={{ width: "auto" }} value={catFilter} onChange={e => setCatFilter(e.target.value)}>
+            <select className="vd-form-select" style={{ width: "auto" }} value={catFilter} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCatFilter(e.target.value)}>
               <option value="">All Categories</option>
               <option value="code">Code</option>
               <option value="design">Design</option>
@@ -150,7 +150,7 @@ export function FirebaseDashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filtered.sort((a,b) => (b.submitted_at ?? 0) - (a.submitted_at ?? 0)).map(sub => (
+                  {filtered.sort((a: any, b: any) => (b.submitted_at ?? 0) - (a.submitted_at ?? 0)).map((sub: any) => (
                     <tr key={sub.id}>
                       <td className="vd-td-mono">{sub.id}</td>
                       <td style={{ maxWidth: "220px" }}>
@@ -187,7 +187,7 @@ export function FirebaseDashboard() {
             </div>
           ) : (
             <div style={{ maxWidth: "680px" }}>
-              {leaders.map((l, i) => (
+              {leaders.map((l: any, i: number) => (
                 <div className="vd-lb-row" key={l.contributor}>
                   <div className={`vd-lb-pos ${MEDALS[i] ?? ""}`}>{ICONS[i] ?? `#${i+1}`}</div>
                   <div className="vd-lb-avatar">{AVATARS[i % AVATARS.length]}</div>
@@ -220,7 +220,7 @@ export function FirebaseDashboard() {
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              {activity.map((act, i) => {
+              {activity.map((act: any, i: number) => {
                 const typeStyle: Record<string, { icon: string; color: string }> = {
                   submitted:  { icon: "📤", color: "var(--accent)" },
                   evaluated:  { icon: "🤖", color: "var(--green)" },
@@ -259,9 +259,9 @@ export function FirebaseDashboard() {
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px", marginBottom: "24px" }}>
             {[
-              { label: "Submissions", val: walletSess?.submission_count ?? subs.filter(s => s.contributor?.toLowerCase() === address?.toLowerCase()).length, color: "var(--accent)" },
-              { label: "Accepted",    val: walletSess?.accepted_count   ?? subs.filter(s => s.contributor?.toLowerCase() === address?.toLowerCase() && s.status === "accepted").length, color: "var(--green)" },
-              { label: "Total Score", val: walletSess?.total_score      ?? subs.filter(s => s.contributor?.toLowerCase() === address?.toLowerCase()).reduce((sum, s) => sum + (s.consensus_score ?? 0), 0), color: "var(--purple)" },
+              { label: "Submissions", val: walletSess?.submission_count ?? subs.filter((s: any) => s.contributor?.toLowerCase() === address?.toLowerCase()).length, color: "var(--accent)" },
+              { label: "Accepted",    val: walletSess?.accepted_count   ?? subs.filter((s: any) => s.contributor?.toLowerCase() === address?.toLowerCase() && s.status === "accepted").length, color: "var(--green)" },
+              { label: "Total Score", val: walletSess?.total_score      ?? subs.filter((s: any) => s.contributor?.toLowerCase() === address?.toLowerCase()).reduce((sum: number, s: any) => sum + (s.consensus_score ?? 0), 0), color: "var(--purple)" },
             ].map(stat => (
               <div key={stat.label} style={{ padding: "20px 16px", background: "var(--card2)", border: "1px solid var(--line)", borderRadius: "var(--r)", textAlign: "center" }}>
                 <div style={{ fontFamily: "var(--head)", fontSize: "1.8rem", fontWeight: 800, color: stat.color }}>{stat.val}</div>
@@ -272,13 +272,13 @@ export function FirebaseDashboard() {
 
           <div>
             <div className="vd-section-eyebrow" style={{ marginBottom: "14px" }}>My Contributions</div>
-            {subs.filter(s => s.contributor?.toLowerCase() === address?.toLowerCase()).length === 0 ? (
+            {subs.filter((s: any) => s.contributor?.toLowerCase() === address?.toLowerCase()).length === 0 ? (
               <div style={{ padding: "32px", textAlign: "center", background: "var(--card)", border: "1px solid var(--line)", borderRadius: "var(--rl)", color: "var(--muted)", fontSize: "0.85rem" }}>
                 You haven&apos;t submitted any contributions yet
               </div>
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                {subs.filter(s => s.contributor?.toLowerCase() === address?.toLowerCase()).map(sub => (
+                {subs.filter((s: any) => s.contributor?.toLowerCase() === address?.toLowerCase()).map((sub: any) => (
                   <div key={sub.id} className="vd-lb-row">
                     <div className="vd-lb-avatar">{CATEGORY_EMOJI[sub.category] ?? "📄"}</div>
                     <div style={{ flex: 1, minWidth: 0 }}>

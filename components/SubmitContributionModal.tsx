@@ -20,7 +20,7 @@ export function SubmitContributionModal() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ contributor: "", title: "", category: "", url: "", description: "" });
 
-  const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
+  const set = (k: string, v: string) => setForm((f: typeof form) => ({ ...f, [k]: v }));
 
   const handleSubmit = () => {
     if (!isConnected || !address) { error("Connect your wallet first"); return; }
@@ -36,7 +36,7 @@ export function SubmitContributionModal() {
       <button className="vd-btn vd-btn-accent" onClick={() => setOpen(true)}>Submit Contribution</button>
 
       {open && (
-        <div className="vd-modal-bg" onClick={e => e.target === e.currentTarget && !isSubmitting && setOpen(false)}>
+        <div className="vd-modal-bg" onClick={(e: React.MouseEvent<HTMLDivElement>) => e.target === e.currentTarget && !isSubmitting && setOpen(false)}>
           <div className="vd-modal" style={{ maxWidth: "680px" }}>
             <button className="vd-modal-close" onClick={() => !isSubmitting && setOpen(false)}>✕</button>
 
@@ -45,27 +45,27 @@ export function SubmitContributionModal() {
 
             <div className="vd-form-group">
               <label className="vd-form-label">Contributor Name / Handle</label>
-              <input className="vd-form-input" placeholder="e.g. alice.eth" value={form.contributor} onChange={e => set("contributor", e.target.value)} />
+              <input className="vd-form-input" placeholder="e.g. alice.eth" value={form.contributor} onChange={(e: React.ChangeEvent<HTMLInputElement>) => set("contributor", e.target.value)} />
             </div>
             <div className="vd-form-group">
               <label className="vd-form-label">Contribution Title</label>
-              <input className="vd-form-input" placeholder="e.g. GenLayer SDK Integration for Python" value={form.title} onChange={e => set("title", e.target.value)} />
+              <input className="vd-form-input" placeholder="e.g. GenLayer SDK Integration for Python" value={form.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => set("title", e.target.value)} />
             </div>
             <div className="vd-form-group">
               <label className="vd-form-label">Category</label>
-              <select className="vd-form-select" value={form.category} onChange={e => set("category", e.target.value)}>
+              <select className="vd-form-select" value={form.category} onChange={(e: React.ChangeEvent<HTMLInputElement>) => set("category", e.target.value)}>
                 <option value="">Select a category…</option>
                 {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
               </select>
             </div>
             <div className="vd-form-group">
               <label className="vd-form-label">GitHub / Resource URL</label>
-              <input className="vd-form-input" placeholder="https://github.com/your-org/your-repo" value={form.url} onChange={e => set("url", e.target.value)} />
+              <input className="vd-form-input" placeholder="https://github.com/your-org/your-repo" value={form.url} onChange={(e: React.ChangeEvent<HTMLInputElement>) => set("url", e.target.value)} />
               <div className="vd-form-hint">Link to your code repository, design file, or written proposal</div>
             </div>
             <div className="vd-form-group">
               <label className="vd-form-label">Description</label>
-              <textarea className="vd-form-textarea" placeholder="Describe your contribution, its purpose, and its impact on the GenLayer ecosystem…" value={form.description} onChange={e => set("description", e.target.value)} style={{ minHeight: "120px" }} />
+              <textarea className="vd-form-textarea" placeholder="Describe your contribution, its purpose, and its impact on the GenLayer ecosystem…" value={form.description} onChange={(e: React.ChangeEvent<HTMLInputElement>) => set("description", e.target.value)} style={{ minHeight: "120px" }} />
             </div>
 
             <div style={{ borderTop: "1px solid var(--line)", marginTop: "8px", paddingTop: "24px" }}>

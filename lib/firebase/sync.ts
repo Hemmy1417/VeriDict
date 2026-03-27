@@ -35,7 +35,7 @@ export async function syncSubmissionToFirebase(
       url:             sub.url ?? "",
       description:     sub.description ?? "",
       status:          sub.status,
-      submitted_at:    sub.submitted_at ?? Date.now(),
+      submitted_at:    (sub as any).submitted_at ?? Date.now(),
       consensus_score: evaluation?.consensus_score,
       quality_score:   evaluation?.quality_score,
       originality_score: evaluation?.originality_score,

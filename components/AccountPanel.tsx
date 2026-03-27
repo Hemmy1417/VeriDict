@@ -53,8 +53,8 @@ export function AccountPanel() {
         <button
           onClick={() => setOpen(true)}
           style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 14px", background: "var(--card2)", border: "1px solid var(--line2)", borderRadius: "var(--r)", cursor: "pointer", transition: "border-color .2s" }}
-          onMouseEnter={e => (e.currentTarget.style.borderColor = "var(--accent)")}
-          onMouseLeave={e => (e.currentTarget.style.borderColor = "var(--line2)")}
+          onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => (e.currentTarget.style.borderColor = "var(--accent)")}
+          onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => (e.currentTarget.style.borderColor = "var(--line2)")}
         >
           <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isOnCorrectNetwork ? "var(--green)" : "var(--gold)", flexShrink: 0 }} />
           <span className="vd-wallet-addr" style={{ padding: 0, background: "none", border: "none", fontSize: "0.72rem" }}>
@@ -67,7 +67,7 @@ export function AccountPanel() {
       )}
 
       {open && (
-        <div className="vd-modal-bg" onClick={e => e.target === e.currentTarget && setOpen(false)}>
+        <div className="vd-modal-bg" onClick={(e: React.MouseEvent<HTMLDivElement>) => e.target === e.currentTarget && setOpen(false)}>
           <div className="vd-modal" style={{ maxWidth: "480px" }}>
             <button className="vd-modal-close" onClick={() => setOpen(false)}>✕</button>
 

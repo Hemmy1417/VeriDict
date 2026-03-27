@@ -28,8 +28,7 @@ export function useVeriDictContract(): VeriDict | null {
     if (!contractAddress) {
       configError(
         "Setup Required",
-        "Contract address not configured. Please set NEXT_PUBLIC_CONTRACT_ADDRESS in your .env file.",
-        { label: "Setup Guide", onClick: () => window.open("/docs/setup", "_blank") }
+        { description: "Contract address not configured. Please set NEXT_PUBLIC_CONTRACT_ADDRESS in your .env file." }
       );
       return null;
     }
@@ -191,7 +190,7 @@ export function useSubmitContribution() {
       setIsSubmitting(true);
       return contract.submit(input.contributor, input.title, input.category, input.url, input.description);
     },
-    onSuccess: (receipt, input) => {
+    onSuccess: (_receipt: any, input: SubmitContributionInput) => {
       queryClient.invalidateQueries({ queryKey: ["submissions"] });
       queryClient.invalidateQueries({ queryKey: ["submissionCount"] });
       queryClient.invalidateQueries({ queryKey: ["leaderboard"] });
@@ -232,7 +231,7 @@ export function useEvaluateSubmission() {
       setEvaluatingId(submissionId);
       return contract.evaluate(submissionId);
     },
-    onSuccess: (receipt, submissionId) => {
+    onSuccess: (_receipt: any, submissionId: string) => {
       queryClient.invalidateQueries({ queryKey: ["submissions"] });
       queryClient.invalidateQueries({ queryKey: ["evaluation", submissionId] });
       queryClient.invalidateQueries({ queryKey: ["fullRecord", submissionId] });
@@ -270,7 +269,7 @@ export function useChallengeEvaluation() {
       setIsChallenging(true);
       return contract.challenge(input.submissionId, input.challenger, input.reason, input.stake);
     },
-    onSuccess: (_, input) => {
+    onSuccess: (_receipt: any, input: ChallengeInput) => {
       queryClient.invalidateQueries({ queryKey: ["submissions"] });
       queryClient.invalidateQueries({ queryKey: ["evaluation", input.submissionId] });
       queryClient.invalidateQueries({ queryKey: ["dispute", input.submissionId] });

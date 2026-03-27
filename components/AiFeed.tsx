@@ -65,7 +65,7 @@ export function AiFeed() {
               <span style={{ color: "var(--muted)" }}>{data.summary}</span>
             </div>
           )}
-          {data.submissions.map(sub => (
+          {data.submissions.map((sub: any) => (
             <div className="vd-lb-row" key={sub.id} style={{ cursor: "default" }}>
               <div className="vd-lb-avatar">{CATEGORY_EMOJI[sub.category] ?? "📄"}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
@@ -82,8 +82,8 @@ export function AiFeed() {
             onClick={() => load(true)}
             disabled={refreshing}
             style={{ marginTop: "12px", fontSize: "0.78rem", fontFamily: "var(--mono)", color: "var(--muted)", background: "none", border: "none", cursor: "pointer", letterSpacing: ".06em" }}
-            onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
-            onMouseLeave={e => (e.currentTarget.style.color = "var(--muted)")}
+            onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => (e.currentTarget.style.color = "var(--accent)")}
+            onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => (e.currentTarget.style.color = "var(--muted)")}
           >
             {refreshing ? "REFRESHING…" : "↻ REFRESH"}
           </button>

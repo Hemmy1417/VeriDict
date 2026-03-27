@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Component } from "react";
+import type { ReactNode } from "react";
 import { Navbar } from "@/components/Navbar";
 import { SubmissionsTable } from "@/components/SubmissionsTable";
 import { Leaderboard } from "@/components/Leaderboard";
@@ -8,6 +9,28 @@ import { AiFeed } from "@/components/AiFeed";
 import { FirebaseDashboard } from "@/components/FirebaseDashboard";
 import { useWallet } from "@/lib/genlayer/wallet";
 import { onWalletConnected } from "@/lib/firebase/sync";
+
+// Catches render errors so the full page doesn't go blank
+class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
+  state = { error: null };
+  static getDerivedStateFromError(error: Error) { return { error }; }
+  render() {
+    if (this.state.error) {
+      return (
+        <div style={{ padding: "48px 24px", textAlign: "center", color: "var(--muted)" }}>
+          <div style={{ fontSize: "2rem", marginBottom: "12px" }}>⚠️</div>
+          <div style={{ fontFamily: "var(--mono)", fontSize: "0.78rem", marginBottom: "8px" }}>
+            Something went wrong rendering this section.
+          </div>
+          <div style={{ fontSize: "0.72rem", color: "var(--muted2)" }}>
+            {(this.state.error as Error).message}
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 function WalletSyncEffect() {
   const { address, isConnected } = useWallet();
@@ -54,7 +77,7 @@ export default function HomePage() {
           </div>
 
           {/* ── Firebase real-time dashboard ── */}
-          <FirebaseDashboard />
+          <ErrorBoundary><FirebaseDashboard /></ErrorBoundary>
 
           {/* ── Divider ── */}
           <div style={{ borderTop: "1px solid var(--line)", margin: "56px 0 48px", position: "relative" }}>
@@ -63,10 +86,10 @@ export default function HomePage() {
 
           {/* ── Live on-chain table + sidebar ── */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "24px", marginBottom: "48px" }}>
-            <SubmissionsTable />
+            <ErrorBoundary><SubmissionsTable /></ErrorBoundary>
             <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-              <Leaderboard />
-              <AiFeed />
+              <ErrorBoundary><Leaderboard /></ErrorBoundary>
+              <ErrorBoundary><AiFeed /></ErrorBoundary>
             </div>
           </div>
 
@@ -99,7 +122,7 @@ export default function HomePage() {
           <div style={{ fontFamily: "var(--mono)", fontSize: "0.65rem", color: "var(--muted2)", letterSpacing: ".08em" }}>VERIDICT · GENLAYER BRADBURY TESTNET</div>
           <div style={{ display: "flex", gap: "24px" }}>
             {[["Powered by GenLayer","https://genlayer.com"],["Studio","https://studio.genlayer.com"],["Docs","https://docs.genlayer.com"],["GitHub","https://github.com/genlayerlabs"]].map(([label, href]) => (
-              <a key={href} href={href} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.82rem", color: "var(--muted)", textDecoration: "none" }} onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")} onMouseLeave={e => (e.currentTarget.style.color = "var(--muted)")}>{label}</a>
+              <a key={href} href={href} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.82rem", color: "var(--muted)", textDecoration: "none" }} onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.color = "var(--accent)")} onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.color = "var(--muted)")}>{label}</a>
             ))}
           </div>
         </div>

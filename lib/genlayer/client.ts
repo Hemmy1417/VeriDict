@@ -104,8 +104,14 @@ export async function switchAccount(): Promise<string> {
 
 // ── GenLayer JS client ────────────────────────────────────────────────────────
 export function getStudioUrl(): string {
-  if (typeof window === "undefined") return process.env.GENLAYER_RPC_URL || "https://studio.genlayer.com:8443/api";
-  return process.env.NEXT_PUBLIC_GENLAYER_RPC_URL || "/api/rpc";
+  // Server-side: use direct RPC
+  if (typeof window === "undefined") {
+    return process.env.GENLAYER_RPC_URL || "https://studio.genlayer.com:8443/api";
+  }
+  // Client-side: always use relative /api/rpc — works on localhost AND Vercel
+  const configured = process.env.NEXT_PUBLIC_GENLAYER_RPC_URL || "";
+  if (configured && !configured.includes("localhost")) return configured;
+  return "/api/rpc";
 }
 
 export function getContractAddress(): string {

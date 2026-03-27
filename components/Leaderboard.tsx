@@ -27,7 +27,7 @@ export function Leaderboard() {
         </div>
       ) : (
         <div>
-          {leaders.slice(0, 10).map((leader, i) => (
+          {leaders.slice(0, 10).map((leader: any, i: number) => (
             <div className="vd-lb-row" key={leader.contributor}>
               <div className={`vd-lb-pos ${MEDALS[i] ?? ""}`}>{ICONS[i] ?? `#${i + 1}`}</div>
               <div className="vd-lb-avatar">{AVATARS[i % AVATARS.length]}</div>

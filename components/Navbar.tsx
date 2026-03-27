@@ -7,8 +7,8 @@ import { useSubmissions } from "@/lib/hooks/useVeriDict";
 
 export function Navbar() {
   const { data: submissions = [] } = useSubmissions();
-  const pending  = submissions.filter(s => s.status === "pending").length;
-  const accepted = submissions.filter(s => s.status === "accepted" || s.status === "accepted_with_feedback").length;
+  const pending  = submissions.filter((s: any) => s.status === "pending").length;
+  const accepted = submissions.filter((s: any) => s.status === "accepted" || s.status === "accepted_with_feedback").length;
 
   return (
     <nav className="vd-nav">

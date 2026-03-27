@@ -95,13 +95,13 @@ export function SubmissionsTable() {
               </tr>
             </thead>
             <tbody>
-              {submissions.map(sub => (
+              {(submissions as any[]).map((sub) => (
                 <SubmissionRow
                   key={sub.id}
                   sub={sub}
-                  currentAddress={address ?? null}
-                  canEvaluate={!!isConnected && !!address && !walletLoading && sub.status === "pending"}
-                  isEvaluating={isEvaluating && evaluatingId === sub.id}
+                  currentAddress={(address ?? null) as string | null}
+                  canEvaluate={!!(isConnected && address && !walletLoading && sub.status === "pending")}
+                  isEvaluating={!!(isEvaluating && evaluatingId === sub.id)}
                   onEvaluate={handleEvaluate}
                 />
               ))}
@@ -114,11 +114,12 @@ export function SubmissionsTable() {
 }
 
 function SubmissionRow({ sub, currentAddress, canEvaluate, isEvaluating, onEvaluate }: {
-  sub: Submission & { consensus_score?: number };
+  sub: any;
   currentAddress: string | null;
   canEvaluate: boolean;
   isEvaluating: boolean;
   onEvaluate: (id: string) => void;
+  [key: string]: any;
 }) {
   const isOwner = currentAddress?.toLowerCase() === sub.contributor?.toLowerCase();
   const urlShort = sub.url ? sub.url.replace(/^https?:\/\//, "").slice(0, 28) : "";
