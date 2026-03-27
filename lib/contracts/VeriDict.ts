@@ -216,6 +216,7 @@ class VeriDict {
         address: this.contractAddress,
         functionName: "submit",
         args: [contributor, title, category, url, description],
+        value: BigInt(0),
       });
       const receipt = await this.client.waitForTransactionReceipt({
         hash: txHash,
@@ -236,6 +237,7 @@ class VeriDict {
         address: this.contractAddress,
         functionName: "evaluate",
         args: [submissionId],
+        value: BigInt(0),
       });
       const receipt = await this.client.waitForTransactionReceipt({
         hash: txHash,
@@ -261,6 +263,7 @@ class VeriDict {
         address: this.contractAddress,
         functionName: "challenge",
         args: [submissionId, challenger, reason, BigInt(stake)],
+        value: BigInt(0),
       });
       const receipt = await this.client.waitForTransactionReceipt({
         hash: txHash,
