@@ -53,7 +53,7 @@ export function SubmitContributionModal() {
             </div>
             <div className="vd-form-group">
               <label className="vd-form-label">Category</label>
-              <select className="vd-form-select" value={form.category} onChange={(e: React.ChangeEvent<HTMLInputElement>) => set("category", e.target.value)}>
+              <select className="vd-form-select" value={form.category} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => set("category", e.target.value)}>
                 <option value="">Select a category…</option>
                 {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
               </select>
