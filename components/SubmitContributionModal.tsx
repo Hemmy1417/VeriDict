@@ -65,7 +65,7 @@ export function SubmitContributionModal() {
             </div>
             <div className="vd-form-group">
               <label className="vd-form-label">Description</label>
-              <textarea className="vd-form-textarea" placeholder="Describe your contribution, its purpose, and its impact on the GenLayer ecosystem…" value={form.description} onChange={(e: React.ChangeEvent<HTMLInputElement>) => set("description", e.target.value)} style={{ minHeight: "120px" }} />
+              <textarea className="vd-form-textarea" placeholder="Describe your contribution, its purpose, and its impact on the GenLayer ecosystem…" value={form.description} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => set("description", e.target.value)} style={{ minHeight: "120px" }} />
             </div>
 
             <div style={{ borderTop: "1px solid var(--line)", marginTop: "8px", paddingTop: "24px" }}>
