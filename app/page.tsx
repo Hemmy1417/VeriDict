@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { SubmissionsTable } from "@/components/SubmissionsTable";
 import { Leaderboard } from "@/components/Leaderboard";
