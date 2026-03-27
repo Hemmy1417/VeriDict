@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useFBSubmissions, useFBLeaderboard, useFBStats, useFBActivity, useFBWalletSession } from "@/lib/firebase/hooks";
 import { useWallet } from "@/lib/genlayer/wallet";
 import { AddressDisplay } from "./AddressDisplay";
