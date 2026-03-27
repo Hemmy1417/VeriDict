@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, Component } from "react";
-import type { ReactNode } from "react";
+import { useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { SubmissionsTable } from "@/components/SubmissionsTable";
 import { Leaderboard } from "@/components/Leaderboard";
@@ -9,28 +8,6 @@ import { AiFeed } from "@/components/AiFeed";
 import { FirebaseDashboard } from "@/components/FirebaseDashboard";
 import { useWallet } from "@/lib/genlayer/wallet";
 import { onWalletConnected } from "@/lib/firebase/sync";
-
-// Catches render errors so the full page doesn't go blank
-class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
-  state = { error: null };
-  static getDerivedStateFromError(error: Error) { return { error }; }
-  render() {
-    if (this.state.error) {
-      return (
-        <div style={{ padding: "48px 24px", textAlign: "center", color: "var(--muted)" }}>
-          <div style={{ fontSize: "2rem", marginBottom: "12px" }}>⚠️</div>
-          <div style={{ fontFamily: "var(--mono)", fontSize: "0.78rem", marginBottom: "8px" }}>
-            Something went wrong rendering this section.
-          </div>
-          <div style={{ fontSize: "0.72rem", color: "var(--muted2)" }}>
-            {(this.state.error as Error).message}
-          </div>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
 
 function WalletSyncEffect() {
   const { address, isConnected } = useWallet();
@@ -77,7 +54,7 @@ export default function HomePage() {
           </div>
 
           {/* ── Firebase real-time dashboard ── */}
-          <ErrorBoundary><FirebaseDashboard /></ErrorBoundary>
+          <FirebaseDashboard />
 
           {/* ── Divider ── */}
           <div style={{ borderTop: "1px solid var(--line)", margin: "56px 0 48px", position: "relative" }}>
@@ -86,10 +63,10 @@ export default function HomePage() {
 
           {/* ── Live on-chain table + sidebar ── */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "24px", marginBottom: "48px" }}>
-            <ErrorBoundary><SubmissionsTable /></ErrorBoundary>
+            <SubmissionsTable />
             <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-              <ErrorBoundary><Leaderboard /></ErrorBoundary>
-              <ErrorBoundary><AiFeed /></ErrorBoundary>
+              <Leaderboard />
+              <AiFeed />
             </div>
           </div>
 
